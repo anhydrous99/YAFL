@@ -12,7 +12,7 @@ namespace YAFL {
 
         void check_fits_status(int status);
     public:
-        void open(const std::string path="");
+        void open(const std::string& path="");
         void close();
 
         BaseFits() = default;
