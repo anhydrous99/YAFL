@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-void YAFL::BaseFits::open(const std::string path="") {
+void YAFL::BaseFits::open(const std::string path) {
     if (path.empty() && _path.empty())
         throw "What file shall I open?";
 
@@ -41,7 +41,7 @@ int YAFL::BaseFits::n_keys() {
 }
 
 void YAFL::BaseFits::print_records() {
-    if (!open)
+    if (!_open)
         throw "File must be open";
     
     int status, nkeys;

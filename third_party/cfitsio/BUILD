@@ -104,7 +104,7 @@ cc_library(
         "-DHAVE_SHMEM_SERVICES=1", 
         "-DHAVE_UNION_SEMUN=1",
         "-DHAVE_FMEMOPEN=1",
-        "-DRENTRANT"
+        "-D_REENTRANT",
         "-Wno-unused-but-set-variable",
         "-Wno-pointer-bool-conversion",
         "-Wno-unused-variable",
