@@ -3,5 +3,5 @@ load("@rules_cc//cc:defs.bzl", "cc_binary")
 cc_binary(
     name = "test",
     srcs = ["test.cc"],
-    deps = ["//YAFL:hello-world"]
+    deps = ["//YAFL:YAFL"]
 )

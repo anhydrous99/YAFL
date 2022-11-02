@@ -1,5 +1,4 @@
-#include "YAFL/hello-world.h"
+#include "YAFL/base.h"
 
 int main() {
-    hello();
 }
