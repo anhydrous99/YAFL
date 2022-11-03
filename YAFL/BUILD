@@ -12,6 +12,5 @@ cc_library(
         "base.h",
         "utils.h"
         ],
-    copts = ['-std=c++17'],
     deps = ["@cfitsio//:cfitsio"]
 )
