@@ -167,3 +167,87 @@ std::vector<long> YAFL::BaseFits::get_img_size() {
     check_fits_status(status);
     return sizes;
 }
+
+long YAFL::BaseFits::num_rows() {
+    check_is_open();
+    int status = 0;
+    long n_rows = 0;
+    fits_get_num_rows(_file_ptr, &n_rows, &status);
+    check_fits_status(status);
+    return n_rows;
+}
+
+int YAFL::BaseFits::num_cols() {
+    check_is_open();
+    int status = 0;
+    int n_cols = 0;
+    fits_get_num_cols(_file_ptr, &n_cols, &status);
+    check_fits_status(status);
+    return n_cols;
+}
+
+int YAFL::BaseFits::matching_col_num(const std::string& match, bool case_sensitive) {
+    check_is_open();
+    int status = 0, col_n = 0;
+    int casesen = (case_sensitive) ? CASESEN : CASEINSEN;
+    fits_get_colnum(_file_ptr, casesen, (char*)match.c_str(), &col_n, &status);
+
+    if (status != 0 && status != COL_NOT_UNIQUE)
+        check_fits_status(status);
+    return col_n;
+}
+
+std::string YAFL::BaseFits::matching_col_name(const std::string& match, bool case_sensitive) {
+    check_is_open();
+    int status = 0, col_n = 0;
+    int casesen = (case_sensitive) ? CASESEN : CASEINSEN;
+    char name[69];
+    fits_get_colname(_file_ptr, casesen, (char*)match.c_str(), name, &col_n, &status);
+
+    if (status != 0 && status != COL_NOT_UNIQUE)
+        check_fits_status(status);
+    return {name};
+}
+
+std::vector<int> YAFL::BaseFits::matching_col_nums(const std::string& match, bool case_sensitive) {
+    check_is_open();
+    int status = 0;
+    std::vector<int> output;
+    int casesen = (case_sensitive) ? CASESEN : CASEINSEN;
+    char* m = (char*)match.c_str();
+    while (status != COL_NOT_FOUND) {
+        int col_num = 0;
+        fits_get_colnum(_file_ptr, casesen, m, &col_num, &status);
+
+        if (status == COL_NOT_FOUND)
+            break;
+
+        if (status != 0 && status != COL_NOT_UNIQUE)
+            check_fits_status(status);
+
+        output.push_back(col_num);
+    }
+    return output;
+}
+
+std::vector<std::string> YAFL::BaseFits::matching_col_names(const std::string& match, bool case_sensitive) {
+    check_is_open();
+    int status = 0;
+    std::vector<std::string> output;
+    int casesen = (case_sensitive) ? CASESEN : CASEINSEN;
+    char* m = (char*)match.c_str();
+    while (status != COL_NOT_FOUND) {
+        char col_name[69];
+        int col_num = 0;
+        fits_get_colname(_file_ptr, casesen, m, col_name, &col_num, &status);
+
+        if (status == COL_NOT_FOUND)
+            break;
+        
+        if (status != 0 && status != COL_NOT_UNIQUE)
+            check_fits_status(status);
+        
+        output.emplace_back(col_name);
+    }
+    return output;
+}

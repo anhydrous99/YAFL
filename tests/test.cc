@@ -111,4 +111,34 @@ namespace {
         auto shape = base_fits.get_img_size();
         ASSERT_THAT(shape, testing::ElementsAre(1074, 329));
     }
+
+    TEST_F(TestBaseTable, TestNRows) {
+        long n_rows = base_fits.num_rows();
+        EXPECT_EQ(n_rows, 34);
+    }
+
+    TEST_F(TestBaseTable, TestNCols) {
+        int n_cols = base_fits.num_cols();
+        EXPECT_EQ(n_cols, 41);
+    }
+
+    TEST_F(TestBaseTable, TestMatchColNum) {
+        int col_num = base_fits.matching_col_num("component");
+        EXPECT_EQ(col_num, 1);
+    }
+
+    TEST_F(TestBaseTable, TestMatchColName) {
+        std::string col_name = base_fits.matching_col_name("comp*");
+        EXPECT_EQ(col_name, "component");
+    }
+
+    TEST_F(TestBaseTable, TestMatchColNums) {
+        auto col_nums = base_fits.matching_col_nums("man_*_flag");
+        ASSERT_THAT(col_nums, testing::ElementsAre(8, 9, 10, 11));
+    }
+
+    TEST_F(TestBaseTable, TestMatchColNames) {
+        auto col_names = base_fits.matching_col_names("man_*_flag");
+        ASSERT_THAT(col_names, testing::ElementsAre("man_add_flag", "man_inc_flag", "man_reg_flag", "man_pos_flag"));
+    }
 }

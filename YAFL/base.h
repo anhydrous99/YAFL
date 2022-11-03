@@ -41,6 +41,12 @@ namespace YAFL {
         int get_img_type();
         int get_img_dim();
         std::vector<long> get_img_size();
+        long num_rows();
+        int num_cols();
+        int matching_col_num(const std::string& match, bool case_sensitive=false);
+        std::string matching_col_name(const std::string& match, bool case_sensitive=false);
+        std::vector<int> matching_col_nums(const std::string& match, bool case_sensitive=false);
+        std::vector<std::string> matching_col_names(const std::string& match, bool case_sensitive=false);
     };
 }
 
