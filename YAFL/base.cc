@@ -142,3 +142,28 @@ std::string YAFL::BaseFits::read_key_unit(const std::string &keyname) {
     check_fits_status(status);
     return {unit};
 }
+
+int YAFL::BaseFits::get_img_type() {
+    check_is_open();
+    int status = 0, type = 0;
+    fits_get_img_type(_file_ptr, &type, &status);
+    check_fits_status(status);
+    return type;
+}
+
+int YAFL::BaseFits::get_img_dim() {
+    check_is_open();
+    int status = 0, naxis = 0;
+    fits_get_img_dim(_file_ptr, &naxis, &status);
+    check_fits_status(status);
+    return naxis;
+}
+
+std::vector<long> YAFL::BaseFits::get_img_size() {
+    int n_dims = get_img_dim();
+    std::vector<long> sizes(n_dims, 0);
+    int status = 0;
+    fits_get_img_size(_file_ptr, n_dims, sizes.data(), &status);
+    check_fits_status(status);
+    return sizes;
+}

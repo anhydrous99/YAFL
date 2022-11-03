@@ -4,6 +4,7 @@
 #include <fitsio.h>
 #include <tuple>
 #include <string>
+#include <vector>
 
 #include "utils.h"
 
@@ -37,6 +38,9 @@ namespace YAFL {
         template <typename T> T read_key_value(const std::string& keyname);
         std::string read_key_comment(const std::string& keyname);
         std::string read_key_unit(const std::string& keyname);
+        int get_img_type();
+        int get_img_dim();
+        std::vector<long> get_img_size();
     };
 }
 

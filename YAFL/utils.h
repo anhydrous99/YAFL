@@ -1,7 +1,3 @@
-//
-// Created by Armando Herrera on 11/2/22.
-//
-
 #ifndef TESTS_UTILS_H
 #define TESTS_UTILS_H
 
