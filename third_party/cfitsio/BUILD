@@ -101,8 +101,6 @@ cc_library(
         "-DHAVE_LIBZ=1",
         "-DHAVE_FTRUNCATE=1",
         "-DHAVE_LONGLONG=1", 
-        "-DHAVE_SHMEM_SERVICES=1", 
-        "-DHAVE_UNION_SEMUN=1",
         "-DHAVE_FMEMOPEN=1",
         "-D_REENTRANT",
         "-Wno-unused-but-set-variable",
