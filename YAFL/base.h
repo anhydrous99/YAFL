@@ -61,7 +61,7 @@ namespace YAFL {
 }
 
 template <typename T>
-std::tuple<T, std::string> YAFL::BaseFits::read_key(const std::string &keyname) {
+inline std::tuple<T, std::string> YAFL::BaseFits::read_key(const std::string &keyname) {
     check_is_open();
     int type = get_cfitsio_type<T>();
     int status = 0;
@@ -73,7 +73,7 @@ std::tuple<T, std::string> YAFL::BaseFits::read_key(const std::string &keyname) 
 }
 
 template <>
-std::tuple<std::string, std::string> YAFL::BaseFits::read_key(const std::string &keyname) {
+inline std::tuple<std::string, std::string> YAFL::BaseFits::read_key(const std::string &keyname) {
     check_is_open();
     int type = get_cfitsio_type<std::string>();
     int status = 0;
