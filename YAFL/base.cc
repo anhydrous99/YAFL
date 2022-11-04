@@ -120,7 +120,7 @@ std::string YAFL::BaseFits::read_card(const std::string &keyname) {
 template <>
 std::tuple<std::string, std::string> YAFL::BaseFits::read_key(const std::string &keyname) {
     check_is_open();
-    int type = get_fits_type<std::string>();
+    int type = get_cfitsio_type<std::string>();
     int status = 0;
     char comment[FLEN_COMMENT];
     char output[FLEN_VALUE];
@@ -250,4 +250,24 @@ std::vector<std::string> YAFL::BaseFits::matching_col_names(const std::string& m
         output.emplace_back(col_name);
     }
     return output;
+}
+
+YAFL::BaseColInfo::BaseColInfo(DataType type, long repeat, long width) : typecode(type), repeat(repeat), width(width) {}
+
+YAFL::BaseColInfo YAFL::BaseFits::get_column_type(int colnum) {
+    check_is_open();
+    int status = 0, type = 0;
+    long width = 0, repeat = 0;
+    fits_get_coltype(_file_ptr, colnum, &type, &repeat, &width, &status);
+    check_fits_status(status);
+    return {static_cast<DataType>(type), repeat, width};
+}
+
+YAFL::BaseColInfo YAFL::BaseFits::get_eqcolumn_type(int colnum) {
+    check_is_open();
+    int status = 0, type = 0;
+    long repeat = 0, width = 0;
+    fits_get_coltype(_file_ptr, colnum, &type, &repeat, &width, &status);
+    check_fits_status(status);
+    return {static_cast<DataType>(type), repeat, width};
 }

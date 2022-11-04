@@ -9,6 +9,14 @@
 #include "utils.h"
 
 namespace YAFL {
+    struct BaseColInfo {
+        DataType typecode;
+        long repeat;
+        long width;
+
+        BaseColInfo(DataType type, long repeat, long width);
+    };
+
     class BaseFits {
         fitsfile* _file_ptr = nullptr;
         std::string _path;
@@ -47,13 +55,15 @@ namespace YAFL {
         std::string matching_col_name(const std::string& match, bool case_sensitive=false);
         std::vector<int> matching_col_nums(const std::string& match, bool case_sensitive=false);
         std::vector<std::string> matching_col_names(const std::string& match, bool case_sensitive=false);
+        BaseColInfo get_column_type(int colnum);
+        BaseColInfo get_eqcolumn_type(int colnum);
     };
 }
 
 template <typename T>
 std::tuple<T, std::string> YAFL::BaseFits::read_key(const std::string &keyname) {
     check_is_open();
-    int type = get_fits_type<T>();
+    int type = get_cfitsio_type<T>();
     int status = 0;
     char comment[FLEN_COMMENT];
     T ret;

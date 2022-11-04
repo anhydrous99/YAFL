@@ -141,4 +141,16 @@ namespace {
         auto col_names = base_fits.matching_col_names("man_*_flag");
         ASSERT_THAT(col_names, testing::ElementsAre("man_add_flag", "man_inc_flag", "man_reg_flag", "man_pos_flag"));
     }
+
+    TEST_F(TestBaseTable, TestGetColType) {
+        auto type1 = base_fits.get_column_type(1);
+        auto type2 = base_fits.get_eqcolumn_type(1);
+
+        EXPECT_EQ(TLONG, type1.typecode);
+        EXPECT_EQ(1, type1.repeat);
+        EXPECT_EQ(4, type1.width);
+        EXPECT_EQ(TLONG, type2.typecode);
+        EXPECT_EQ(1, type2.repeat);
+        EXPECT_EQ(4, type2.width);
+    }
 }
