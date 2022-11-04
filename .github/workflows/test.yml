@@ -8,7 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout github repo (+ download lfs dependencies)
+      uses: actions/checkout@v1
+      with:
+        lfs: true
+    
+    - name: Checkout lfs objects
+      run: git lfs checkout
 
     - name: Mount bazel cache
       uses: actions/cache@v1
