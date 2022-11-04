@@ -8,7 +8,11 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        include:
+          - os: ubuntu-latest 
+            type: linux
+          - os: macos-latest
+            type: darwin
     
     steps:
     - name: Checkout github repo (+ download lfs dependencies)
@@ -25,9 +29,9 @@ jobs:
         path: "/home/runner/.cache/bazel"
         key: bazel
 
-    - name: Install bazelisk
+    - name: Install linux bazelisk
       run: |
-        curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.1.0/bazelisk-linux-amd64"
+        curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.1.0/bazelisk-${{ matrix.type }}-amd64"
         mkdir -p "${GITHUB_WORKSPACE}/bin/"
         mv bazelisk-linux-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
         chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
