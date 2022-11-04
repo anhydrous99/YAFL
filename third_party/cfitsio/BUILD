@@ -103,7 +103,6 @@ cc_library(
         "-DHAVE_LONGLONG=1", 
         "-DHAVE_FMEMOPEN=1",
         "-D_REENTRANT",
-        "-Wno-unused-but-set-variable",
         "-Wno-unused-variable",
         "-Wno-comment",
         "-Wno-unused-function",
