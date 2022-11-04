@@ -1,13 +1,29 @@
-on: push
-name: Run Tests
-jobs:
-  checks:
-    name: run
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
+name: CI
 
-    - name: run
-      uses: ngalaiko/bazel-action/1.2.1@master
+on:
+  push: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Mount bazel cache
+      uses: actions/cache@v1
       with:
-        args: build //tests:test
+        path: "/home/runner/.cache/bazel"
+        key: bazel
+
+    - name: Install bazelisk
+      run: |
+        curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.1.0/bazelisk-linux-amd64"
+        mkdir -p "${GITHUB_WORKSPACE}/bin/"
+        mv bazelisk-linux-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
+        chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
+
+    - name: Test
+      run: |
+        "${GITHUB_WORKSPACE}/bin/bazel" run //tests:test
+        
