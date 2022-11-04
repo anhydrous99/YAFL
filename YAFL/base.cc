@@ -117,18 +117,6 @@ std::string YAFL::BaseFits::read_card(const std::string &keyname) {
     return {card};
 }
 
-template <>
-std::tuple<std::string, std::string> YAFL::BaseFits::read_key(const std::string &keyname) {
-    check_is_open();
-    int type = get_cfitsio_type<std::string>();
-    int status = 0;
-    char comment[FLEN_COMMENT];
-    char output[FLEN_VALUE];
-    fits_read_key(_file_ptr, type, (char*)keyname.c_str(), output, comment, &status);
-    check_fits_status(status);
-    return {std::string{output}, std::string{comment}};
-}
-
 std::string YAFL::BaseFits::read_key_comment(const std::string &keyname) {
     auto [_, comment] = read_key<std::string>(keyname);
     return comment;

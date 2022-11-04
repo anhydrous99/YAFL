@@ -72,6 +72,18 @@ std::tuple<T, std::string> YAFL::BaseFits::read_key(const std::string &keyname) 
     return {ret, std::string{comment}};
 }
 
+template <>
+std::tuple<std::string, std::string> YAFL::BaseFits::read_key(const std::string &keyname) {
+    check_is_open();
+    int type = get_cfitsio_type<std::string>();
+    int status = 0;
+    char comment[FLEN_COMMENT];
+    char output[FLEN_VALUE];
+    fits_read_key(_file_ptr, type, (char*)keyname.c_str(), output, comment, &status);
+    check_fits_status(status);
+    return {std::string{output}, std::string{comment}};
+}
+
 template <typename T>
 T YAFL::BaseFits::read_key_value(const std::string &keyname) {
     auto [value, _] = read_key<T>(keyname);
