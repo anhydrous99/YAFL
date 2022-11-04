@@ -29,11 +29,11 @@ jobs:
         path: "/home/runner/.cache/bazel"
         key: bazel
 
-    - name: Install linux bazelisk
+    - name: Install bazelisk
       run: |
         curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.1.0/bazelisk-${{ matrix.type }}-amd64"
         mkdir -p "${GITHUB_WORKSPACE}/bin/"
-        mv bazelisk-linux-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
+        mv bazelisk-${{ matrix.type }}-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
         chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
 
     - name: Test
