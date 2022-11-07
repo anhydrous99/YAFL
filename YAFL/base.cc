@@ -91,12 +91,18 @@ void YAFL::BaseFits::open_hdu(int n) {
     check_fits_status(status);
 }
 
-int YAFL::BaseFits::get_hdu_type() {
+void YAFL::BaseFits::open_hdu(const std::string& extname, HDUType type) {
+    check_is_open();
+    int status = 0;
+    fits_movnam_hdu(_file_ptr, type, (char*)extname.c_str(), 0, &status);
+}
+
+YAFL::HDUType YAFL::BaseFits::get_hdu_type() {
     check_is_open();
     int status = 0, hdutype = 0;
     fits_get_hdu_type(_file_ptr, &hdutype, &status);
     check_fits_status(status);
-    return hdutype;
+    return static_cast<HDUType>(hdutype);
 }
 
 std::string YAFL::BaseFits::read_record(int keynum) {
@@ -131,12 +137,12 @@ std::string YAFL::BaseFits::read_key_unit(const std::string &keyname) {
     return {unit};
 }
 
-int YAFL::BaseFits::get_img_type() {
+YAFL::ImageType YAFL::BaseFits::get_img_type() {
     check_is_open();
     int status = 0, type = 0;
     fits_get_img_type(_file_ptr, &type, &status);
     check_fits_status(status);
-    return type;
+    return static_cast<ImageType>(type);
 }
 
 int YAFL::BaseFits::get_img_dim() {

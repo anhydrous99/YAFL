@@ -38,7 +38,8 @@ namespace YAFL {
         int num_hdus();
         int current_hdu();
         void open_hdu(int n);
-        int get_hdu_type();
+        void open_hdu(const std::string& extname, HDUType type);
+        HDUType get_hdu_type();
         std::string read_record(int keynum);
         std::string read_card(const std::string& keyname);
 
@@ -46,7 +47,7 @@ namespace YAFL {
         template <typename T> T read_key_value(const std::string& keyname);
         std::string read_key_comment(const std::string& keyname);
         std::string read_key_unit(const std::string& keyname);
-        int get_img_type();
+        ImageType get_img_type();
         int get_img_dim();
         std::vector<long> get_img_size();
         long num_rows();

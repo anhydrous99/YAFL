@@ -50,13 +50,18 @@ namespace {
     }
 
     TEST_F(TestBaseTable, TestHDUType) {
-        int hdu_type = base_fits.get_hdu_type();
-        EXPECT_EQ(hdu_type, BINARY_TBL);
+        auto hdu_type = base_fits.get_hdu_type();
+        EXPECT_EQ(hdu_type, YAFL::HDUType::binary_tbl);
     }
 
     TEST_F(TestBaseTable, TestOpenHDU) {
         base_fits.open_hdu(3);
         EXPECT_EQ(base_fits.current_hdu(), 3);
+    }
+
+    TEST_F(TestBaseTable, TestOpenHDUName) {
+        base_fits.open_hdu("WAVSRC", YAFL::HDUType::binary_tbl);
+        EXPECT_EQ(base_fits.current_hdu(), 4);
     }
 
     TEST_F(TestBaseTable, TestReadKeyRecord) {
@@ -98,8 +103,8 @@ namespace {
     }
 
     TEST_F(TestBaseImage, TestGetImgType) {
-        int type = base_fits.get_img_type();
-        EXPECT_EQ(type, DOUBLE_IMG);
+        auto type = base_fits.get_img_type();
+        EXPECT_EQ(type, YAFL::ImageType::i_double);
     }
 
     TEST_F(TestBaseImage, TestGetImgDim) {

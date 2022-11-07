@@ -22,6 +22,21 @@ namespace YAFL {
         t_double = TDOUBLE
     };
 
+    enum HDUType {
+        image = IMAGE_HDU,
+        ascii_tbl = ASCII_TBL,
+        binary_tbl = BINARY_TBL
+    };
+
+    enum ImageType {
+        i_byte = BYTE_IMG,
+        i_short = SHORT_IMG,
+        i_long = LONG_IMG,
+        i_longlong = LONGLONG_IMG,
+        i_float = FLOAT_IMG,
+        i_double = DOUBLE_IMG
+    };
+
     template<typename T>
     constexpr int get_cfitsio_type() {
         int returned = -1;
